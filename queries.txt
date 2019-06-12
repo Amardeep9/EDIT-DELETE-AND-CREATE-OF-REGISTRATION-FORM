@@ -1,0 +1,135 @@
+USE [REGISMVC]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_GetDept]    Script Date: 12-Jun-19 7:54:12 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+ALTER PROCEDURE [dbo].[sp_GetDept] 
+	
+AS
+BEGIN
+
+Select * from tblDepartment
+END
+
+
+
+
+USE [REGISMVC]
+GO
+/****** Object:  StoredProcedure [dbo].[spAddUser]    Script Date: 12-Jun-19 7:54:59 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[spAddUser]     
+(    
+    @EmpName VARCHAR(20),     
+    @bday datetime,    
+    @DeptID VARCHAR(20),    
+    @EmpAdress VARCHAR(6),
+	@City VARCHAR(20),
+	@EmpMob VARCHAR(20)  
+
+)    
+as     
+Begin     
+    Insert into tblUserReg (EmpName,bday,DeptID , EmpAddress,City, EmpMob )     
+    Values (@EmpName,@bday,@DeptID, @EmpAdress,@City, @EmpMob)     
+End
+
+
+
+
+
+
+
+USE [REGISMVC]
+GO
+/****** Object:  StoredProcedure [dbo].[spDeleteUser]    Script Date: 12-Jun-19 7:55:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[spDeleteUser]     
+(      
+   @EmpID int      
+)      
+as       
+begin      
+   Delete from tblUserReg where EmpID=@EmpID      
+
+
+End
+
+
+
+
+
+
+USE [REGISMVC]
+GO
+/****** Object:  StoredProcedure [dbo].[spGetAllUsers]    Script Date: 12-Jun-19 7:55:29 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[spGetAllUsers]    
+as    
+Begin    
+    select 
+		[EmpID]
+      ,[EmpName]
+      ,[bday]
+      ,u.[DeptID]
+      ,[EmpAddress]
+      ,[City]
+      ,[EmpMob]
+	     , t.DeptName
+    from tblUserReg u
+	join tblDepartment t on t.DeptID= u.DeptID
+    order by EmpID    
+
+	--DeptName
+End
+USE [REGISMVC]
+GO
+/****** Object:  StoredProcedure [dbo].[spUpdateUser]    Script Date: 12-Jun-19 7:55:50 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[spUpdateUser]      
+(      
+   @EmpID INTEGER ,    
+   @EmpName NVARCHAR(20),     
+   @bday datetime,    
+   @EmpAddress VARCHAR(20),    
+   @City VARCHAR(67),
+   @EmpMob VARCHAR(32),
+   @DeptID INTEGER
+      
+)      
+as      
+begin      
+   Update tblUserReg       
+   set EmpName=@EmpName, 
+   bday=@bday,
+   EmpAddress= @EmpAddress,    
+   City=@City,
+   EmpMob=@EmpMob ,
+   DeptID=@DeptID    
+       
+   where EmpID=@EmpID      
+End
+
+
+
+
+
+
+
+
